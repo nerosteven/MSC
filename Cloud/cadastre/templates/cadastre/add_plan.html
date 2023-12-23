@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Plan{% endblock %}
+{% block heading %}Add Plan{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      {% if error_message %}
+      <div class="alert alert-danger">{{ error_message }}</div>
+      {% endif %}
+      <form method="post" class="mb-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="mb-3">
+          <label for="plannumber" class="form-label">Plan number:</label>
+          <input type="text" name="plannumber" class="form-control" required>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="area" class="form-label">Area:</label>
+            <input type="text" name="area" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" name="location" class="form-control">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="surveyor" class="form-label">Surveyor:</label>
+          <input type="text" name="surveyor" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="coordinatesystem" class="form-label">Coordinate system:</label>
+          <input type="text" name="coordinatesystem" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Date:</label>
+          <input type="date" name="date" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="num_coordinates" class="form-label">Number of Coordinates:</label>
+          <input type="number" name="num_coordinates" id="num_coordinates" class="form-control" min="1" value="1" required>
+        </div>
+        <div id="coordinates">
+          <h3>Coordinates:</h3>
+          <!-- Script code for adding coordinates -->
+        </div>
+        <button type="button" id="addCoordinateButton" class="btn btn-secondary">Add Coordinate</button>
+        <button type="submit" class="btn btn-primary">Add Plan</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+const numCoordinatesInput = document.getElementById('num_coordinates');
+const coordinatesDiv = document.getElementById('coordinates');
+const addCoordinateButton = document.getElementById('addCoordinateButton');
+
+addCoordinateButton.addEventListener('click', () => {
+  const numCoordinates = coordinatesDiv.querySelectorAll('.coordinate').length;
+
+  if (numCoordinates === numCoordinatesInput.valueAsNumber) {
+    alert('Maximum number of coordinates reached');
+    return;
+  }
+
+  const coordinateInputs = `
+    <div class="coordinate">
+      <h3>Coordinate ${numCoordinates + 1}</h3>
+      <label for="pillarnumber">Pillar number:</label>
+      <input type="text" name="pillarnumber[]"><br><br>
+      <label for="eastings">Eastings:</label>
+      <input type="text" name="eastings[]"><br><br>
+      <label for="northings">Northings:</label>
+      <input type="text" name="northings[]"><br><br>
+    </div>
+  `;
+
+  coordinatesDiv.insertAdjacentHTML('beforeend', coordinateInputs);
+});
+</script>
+{% endblock %}

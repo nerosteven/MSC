@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="text-center">
+                {% if profile.profile_pic %}
+                <img src="{{ profile.profile_pic.url }}" alt="{{ user.username }}" class="rounded-circle img-fluid mb-3">
+                {% else %}
+                <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="{{ user.username }}" class="rounded-circle img-fluid mb-3">
+                {% endif %}
+                <h4>{{ user.username }}</h4>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h2>Profile Information</h2>
+            <div class="mb-4">
+                <h5>Full Name:</h5>
+                <p>{{ profile.full_name }}</p>
+            </div>
+            <div class="mb-4">
+                <h5>Company Name:</h5>
+                <p>{{ profile.company_name }}</p>
+            </div>
+            <div class="mb-4">
+                <h5>Bio:</h5>
+                <p>{{ profile.bio }}</p>
+            </div>
+            <div class="mb-4">
+                <h5>Address:</h5>
+                <p>{{ profile.address }}</p>
+                <p>{{ profile.state }}</p>
+            </div>
+            <div class="mb-4">
+                <h5>Phone:</h5>
+                <p>{{ profile.phone }}</p>
+            </div>
+            <a href="{% url 'view_map' %}">View on Map</a>
+            <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

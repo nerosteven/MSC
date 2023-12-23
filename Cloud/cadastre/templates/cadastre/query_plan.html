@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Query Plan{% endblock %}
+{% block heading %}Query Plan{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      {% if message %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endif %}
+      <form method="POST" action="{% url 'query_plan' %}" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="pillarnumber" class="form-label">Pillar Number:</label>
+          <input type="text" name="pillarnumber" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Query Plan</button>
+      </form>
+
+      <!-- Display no records message -->
+      {% if no_records %}
+      <p class="text-muted">No records found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

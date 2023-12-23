@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>LAND INFORMATION</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'CADASTRE/css/mdb.min.css' %}"/>
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="{% static 'CADASTRE/css/style.css' %}" />
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+</head>
+<body>
+  <!--Main Navigation-->
+  <header>
+    <style>
+      #intro {
+        background-image: url("https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_webp/https://www.kalayojan.com/wp-content/uploads/2018/04/Cam1__result.jpg");
+        height: 100vh;
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+
+      .navbar .nav-link {
+        color: #f5f7fa !important;
+      }
+                  .fixed-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            background-color: #333; ;
+        }
+        body {
+            padding-top: 72px; /* Adjust as needed */
+        }
+
+    </style>
+
+    
+      <!-- Navbar -->
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+         <a href="{% url 'home' %}">
+                    <img src="{% static 'CADASTRE\img\logo.jpg' %}" alt="My Logo" width="117" height="50">
+                </a>
+        <!-- Navbar brand -->
+        </a>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarExample01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item{% if request.path == '/add_plan/' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'add_plan' %}">Add Plan</a>
+              </li>
+            <li class="nav-item{% if request.path == '/query_plan/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'query_plan' %}">Query Plan</a>
+            </li>
+            <li class="nav-item{% if request.path == '/query_plan/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'login' %}">Logout</a>
+            <li class="nav-item{% if request.path == '/profile/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+              </li>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link">Hello, {{ request.user }}</span>
+            </li>
+            </ul>
+          <ul class="navbar-nav d-flex flex-row">
+            <!-- Icons -->
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://www.facebook.com/nerosteve" rel="nofollow" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://twitter.com/Nerosteve" rel="nofollow" target="_blank">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://github.com/Nerostevenz/land_information" rel="nofollow" target="_blank">
+                <i class="fab fa-github"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar -->
+    
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong" style="background-image: url('https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_webp/https://www.kalayojan.com/wp-content/uploads/2018/04/Cam1__result.jpg');">
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container d-flex align-items-center justify-content-center text-center h-100">
+          <div class="text-white">
+            <h1 class="mb-3">Developed for Surveyors</h1>
+            <h5 class="mb-4">Let us handle your pillar identification!! Surveyor!!</h5>  
+            <a class="btn btn-outline-light btn-lg m-2" href="{% url 'add_plan' %}" role="button"
+                rel="nofollow">ADD PLAN</a>
+            <a class="btn btn-outline-light btn-lg m-2" href="{% url 'query_plan' %}" role="button">QUERY PLAN</a>
+            <a class="btn btn-outline-light btn-lg m-2" href="{% url 'search_surveyors' %}" role="button">SEARCH SURVEYOR</a>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+  <main class="mt-5">
+    <div class="container">
+      <!--Section: Content-->
+      <section>
+        <div class="row">
+          <div class="col-md-6 gx-5 mb-4">
+            <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
+              <img src="https://newsdesk.com.ng/wp-content/uploads/2020/06/University-of-Uyo.jpg" class="img-fluid" />
+              <a href="#!">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 gx-5 mb-4">
+            <h4><strong>University of Uyo</strong></h4>
+            <p class="text-muted">
+               The University of Uyo was founded in 1991 by the Federal Government of Nigeria. At the time, there existed in Uyo the University of Cross River State which was established in 1981 by the then Cross River State Government. In 1987 Akwa Ibom State with headquarters at Uyo was created out of the Cross River State and from that time up to the time of Federal Government take-over in 1991, the University was jointly owned by Akwa Ibom and Cross River State Governments.<a href="https://uniuyo.edu.ng/history/">Read more</a>
+            <p><strong>Department of Geoinformatics and Surveying</strong></p>
+            <p class="text-muted">
+              The Department was established in 1995 following NUC’s approval. The first batch of students were admitted in the same academic year.
+							The pioneer head was late Rev. (Surv.) Udo W. Obot, a contract staff, while other Lecturers were mainly on part time from the Ministry and Industry. Some equipment was bought by the University while some were donated to the young Department. <a href="https://uniuyo.edu.ng/faculty-of-environmental-studies/geoinformatics-land-surveying/">Read more</a>
+          </div>
+        </div>
+      </section>
+      <!--Section: Content-->
+      <hr class="my-5" />
+      <section class="text-center">
+        <h4 class="mb-5"><strong>AUTHORITIES</strong></h4>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="https://www.oasdom.com/wp-content/uploads/2018/03/oasdom.com-nigerian-government-structure.jpg" class="img-fluid" />
+                <a href="https://osgof.gov.ng/">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Surveyor General of the Federation</h5>
+                <p class="card-text">
+										No.8 Yawuri Street, P.M.B. 5203 Wuse, Garki II, Abuja, Nigeria
+                </p>
+                <a href="https://osgof.gov.ng/" class="btn btn-primary">Visit</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="https://naijaskul.com/wp-content/uploads/2020/12/Akwa-Ibom-State-Government.jpg" class="img-fluid" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Surveyor General of the State</h5>
+                <p class="card-text">
+										131 Udo Umana St, 520102, Uyo, Akwa Ibom State
+                </p>
+                <a href="https://www.facebook.com/ossgaks/reviews" class="btn btn-primary">Visit</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="https://th.bing.com/th/id/R.319c0c45d99e8bfd96b969ca41724501?rik=%2f9GAQuTI8dLk4Q&riu=http%3a%2f%2f1.bp.blogspot.com%2f-AXIoFwgHZ1Y%2fUCbolqNmGbI%2fAAAAAAAAAAw%2fuk2hSIzlZSs%2fs1600%2fnis%2blogo%2bwhitebg.jpg&ehk=laV5oLHzBomMzTwHqDTqSaElZTFtmtvNcd%2fdSGjSJ0s%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" class="img-fluid" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Nigerian Institute of Surveyors</h5>
+                <p class="card-text">
+										Akpa Ube St, 520102, Uyo, Akwa Ibom State
+                </p>
+                <a href="https://nisngr.net/" class="btn btn-primary">Visit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container mt-5">
+          <div class="row">
+            <div class="col-md-12">
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Include Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script>
+          // Initialize the map
+          const map = L.map('map').setView([0, 0], 2);
+      
+          // Add a tile layer to the map
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+      
+          // Get the user's current position
+          navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+      
+            // Center the map on the user's location
+            map.setView([lat, lng], 13);
+      
+            // Add a marker at the user's location with a popup
+            L.marker([lat, lng]).addTo(map)
+              .bindPopup('Your Location')
+              .openPopup();
+          });
+        </script>
+      </body>
+      </html>
+      <hr class="m-0" />
+        <!--Section: Content-->
+        <section class="mb-5">
+          <h4 class="mb-5 text-center"><strong>Feedback</strong></h4>
+
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+              <form>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="form3Example1" class="form-control" />
+                      <label class="form-label" for="form3Example1">First name</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="form3Example2" class="form-control" />
+                      <label class="form-label" for="form3Example2">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <textarea class="form-control" id="feedbackBox" rows="4"></textarea>
+                <label class="form-label" for="feedbackBox">Feedback</label>
+              </div>
+
+              <!-- Checkbox -->
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <!--Section: Content-->
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+
+    <hr class="m-0" />
+
+    <div class="text-center py-4 align-items-center">
+      <p>Contact Us</p>
+      </a>
+      <a href="https://www.facebook.com/nerosteve" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://twitter.com/nerostevenz1" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://github.com/Nerostevenz/land_information" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright Land Information
+    </div>
+    <!-- Copyright -->
+  </footer>
