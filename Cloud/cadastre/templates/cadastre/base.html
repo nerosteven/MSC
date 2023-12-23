@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>LAND INFORMATION</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'CADASTRE/css/mdb.min.css' %}"/>
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="{% static 'CADASTRE/css/style.css' %}" />
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+</head>
+<body>
+   <header>
+      <style>
+        #intro {
+          background-image: url("https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_webp/https://www.kalayojan.com/wp-content/uploads/2018/04/Cam1__result.jpg");
+          height: 100vh;
+        }
+
+        /* Height for devices larger than 576px */
+        @media (min-width: 992px) {
+          #intro {
+            margin-top: -58.59px;
+          }
+        }
+
+        .navbar .nav-link {
+          color: #f5f7fa !important;
+        }
+                    .fixed-top {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              z-index: 10000;
+              background-color: #333; ;
+          }
+          body {
+              padding-top: 72px; /* Adjust as needed */
+          }
+
+      </style>
+
+      
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+         <a href="{% url 'home' %}">
+                    <img src="{% static 'CADASTRE\img\logo.jpg' %}" alt="My Logo" width="117" height="50">
+                </a>
+        <!-- Navbar brand -->
+        </a>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarExample01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item{% if request.path == '/add_plan/' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'add_plan' %}">Add Plan</a>
+              </li>
+            <li class="nav-item{% if request.path == '/query_plan/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'query_plan' %}">Query Plan</a>
+            </li>
+            <li class="nav-item{% if request.path == '/query_plan/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'login' %}">Logout</a>
+            </li>
+            <li class="nav-item{% if request.path == '/search/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'search_surveyors' %}">Search</a>
+            </li>
+            <li class="nav-item{% if request.path == '/profile/' %} active{% endif %}">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link">Hello, {{ request.user }}</span>
+            </li>
+            </ul>
+
+            <ul class="navbar-nav d-flex flex-row">
+              <!-- Icons -->
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://www.facebook.com/nerosteve" rel="nofollow" target="_blank">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://twitter.com/Nerosteve" rel="nofollow" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://github.com/Nerostevenz/land_information" rel="nofollow" target="_blank">
+                  <i class="fab fa-github"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Navbar -->
+      <main>
+
+      <!-- Header removed -->
+
+      <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+      
+        <!-- Content sections removed -->
+      
+      </div>
+
+      {% block content %}{% endblock %}
+
+    </main>
+      <!-- Background image -->
+
+    </header>
+    <!--Main Navigation-->
+
+    <!--Footer-->
+
+      <hr class="m-0" />
+
+      <div class="text-center py-4 align-items-center">
+        <p>Contact Us</p>
+        </a>
+        <a href="https://www.facebook.com/nerosteve" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://twitter.com/nerostevenz1" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://github.com/Nerostevenz/land_information" class="btn btn-primary m-1" role="button" rel="nofollow" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright Land Information
+      </div>
+      <!-- Copyright -->
+    </footer>

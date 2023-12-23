@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="search">
+     <h2 class="explore-title">Search</h2></i>
+        <form method="POST" class="search-form">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input type="text" class="form-control" name="search_query" placeholder="Enter name of surveyor">
+          </div>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        {% if no_records %}
+        <p class="text-muted mt-3">No search results found.</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <style>
+    .search {
+      text-align: center;
+    }
+
+    .search i {
+      margin-right: 10px;
+    }
+
+    .search-form input[type="text"] {
+      width: 100%; /* Use the full width of the container */
+      max-width: 400px; /* Limit the width to prevent it from getting too wide */
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #333;
+      border-radius: 5px;
+    }
+
+    .search-form .btn-primary {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}

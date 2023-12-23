@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Search Results</h2>
+    <ul>
+        {% for profile in search_results %}
+        <li>
+            <strong>{{ profile.user.username }}</strong><br>
+            <strong>Full name:</strong> {{ profile.full_name }}<br>
+            <strong>Company Name: </strong>{{ profile.company_name }}<br>
+            <strong>Address:</strong> {{ profile.address }}<br>
+            <a href="{% url 'view_map' %}">Display Distance</a>
+        </li>
+        {% empty %}
+        <li>No surveyors found.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

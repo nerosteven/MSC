@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Query Result{% endblock %}
+{% block heading %}Query Result{% endblock %}
+
+{% block content %}
+{% if plan %}
+  <table style="border-collapse: collapse; width: 100%;">
+    <tr style="background-color: #f2f2f2;">
+      <th style="border: 1px solid black; padding: 8px;">Plan number</th>
+      <th style="border: 1px solid black; padding: 8px;">Area</th>
+      <th style="border: 1px solid black; padding: 8px;">Location</th>
+      <th style="border: 1px solid black; padding: 8px;">Surveyor</th>
+      <th style="border: 1px solid black; padding: 8px;">Coordinate system</th>
+      <th style="border: 1px solid black; padding: 8px;">Date</th>
+      <th style="border: 1px solid black; padding: 8px;">Number of coordinates</th>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.plannumber }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.area }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.location }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.surveyor }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.coordinatesystem }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ plan.date }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ coords.count }}</td>
+    </tr>
+  </table>
+  <br>
+  <table style="border-collapse: collapse; width: 100%;">
+    <tr style="background-color: #f2f2f2;">
+      <th style="border: 1px solid black; padding: 8px;">Pillar number</th>
+      <th style="border: 1px solid black; padding: 8px;">Eastings</th>
+      <th style="border: 1px solid black; padding: 8px;">Northings</th>
+    </tr>
+    {% for coord in coords %}
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">{{ coord.pillarnumber }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ coord.eastings }}</td>
+      <td style="border: 1px solid black; padding: 8px;">{{ coord.northings }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <a href="{% url 'download_csv' %}?pillarnumber={{ plan.plannumber }}" class="btn btn-outline-primary">Download CSV</a>
+{% else %}
+  <p>No plan found for the given pillarnumber.</p>
+{% endif %}
+{% endblock %}
