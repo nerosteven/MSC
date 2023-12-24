@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
+if os.name == 'nt':
+    VIEW_BASE = os.environ['VIRTUAL_ENV']
+    os.environ['PATH'] = os.path.join(VIEW_BASE, 'lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
+    os.environ['PROJ_LIB'] = os.path.join(VIEW_BASE, 'lib\\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -99,22 +103,22 @@ WSGI_APPLICATION = 'Cloud.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
+
 
 import dj_database_url
-
+''''
 DATABASES = {
     'default' : dj_database_url.parse(env('DATABASE_URL'))
 }
 
-
+'''
 
 
 

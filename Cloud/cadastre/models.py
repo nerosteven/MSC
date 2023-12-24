@@ -54,15 +54,6 @@ class UserMap(models.Model):
         managed = True
 
 
-class UserMap(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    coordinates = models.ManyToManyField(Coordinate)
-    map_data = models.TextField(blank=True, null=True)  # New field to store the map data as JSON
-
-    class Meta:
-        managed = True
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, default='')
