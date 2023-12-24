@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y*isiq-5+!$4d(mnsewl)pgx!6c0zt9#jr&cwv@=k6!rr^33xl'
+
+
+import environ
+
+env = environ.Env()
+
+environ.Env.read_env()
+
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +48,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cadastre.apps.CadastreConfig',
+    'register.apps.RegisterConfig',
+    'crispy_bootstrap4',
+    'crispy_forms',
+    'leaflet',
+    'geopy',
 ]
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (0, 0),  # Default map center
+    'DEFAULT_ZOOM': 10,  # Default zoom level
+}
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +79,7 @@ ROOT_URLCONF = 'Cloud.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'cadastre/templates/cadastre')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,12 +98,25 @@ WSGI_APPLICATION = 'Cloud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+
+import dj_database_url
+
+DATABASES = {
+    'default' : dj_database_url.parse(env('DATABASE_URL'))
+}
+
+
+
+
 
 
 # Password validation
