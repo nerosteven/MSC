@@ -6,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm
 import csv
 from .forms import AuthForm
 
-
 def authenticate_view(request):
   form = AuthForm()
 
@@ -99,4 +98,3 @@ def loginPage(request):
 
     context = {}
     return render(request, 'accounts/login.html', context)
-

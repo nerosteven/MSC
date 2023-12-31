@@ -25,6 +25,5 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['full_name', 'company_name', 'bio', 'profile_pic', 'address', 'State', 'phone']
 
-
 class SearchForm(forms.Form):
     search_query = forms.CharField(label='Search', max_length=100)

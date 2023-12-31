@@ -24,6 +24,7 @@ from django.db.models import Q
 from .forms import SearchForm
 from .models import Profile
 
+
 @login_required
 def add_plan(request):
     if request.method == 'POST':
@@ -235,3 +236,4 @@ def view_map(request):
         'user_address': user_address,
         'leaflet_widget': LeafletWidget(),
     })
+

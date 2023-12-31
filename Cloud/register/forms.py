@@ -11,4 +11,5 @@ class UserRegisterForm(UserCreationForm):
         
 class AuthForm(forms.Form):
   registration_number = forms.CharField()
+
   
