@@ -23,5 +23,6 @@ urlpatterns = [
     path('register/', register_views.register, name='register'),
     path('login/', register_views.loginPage, name='login'),
     path('',  register_views.authenticate_view, name='authenticate'),
-    path('', include('cadastre.urls')),  
+    path('cadastre/', include('cadastre.urls')),
 ]
+
